@@ -5,7 +5,7 @@ This project is focused on building a set of Python libraries to connect and man
 
 By the end of the project, the libraries will be hosted on GitHub, allowing public access and contribution. The libraries will also include relevant documentation to help users implement these features in their own systems.
 
-Key Features:
+# Key Features
    Data copying and synchronization between databases
    
    Data minimization and sanitization techniques for sensitive information
@@ -16,7 +16,7 @@ Key Features:
   
    Open-source and free for use
 
-Competitor Analysis:
+# Competitor Analysis
 We reviewed a few existing tools in the market to identify their strengths and weaknesses. Below is a comparison of popular tools:
 
 1. Tonic.AI
@@ -58,11 +58,11 @@ Setup and configuration are complex
 
 Enterprise-level pricing
 
-Our Solution
+# Our Solution
 Our custom tool aims to provide a flexible, open-source solution for secure data management that can be easily integrated into different database systems. We focus on:
 
-Affordability: Accessible to a wider range of users, especially small businesses and individual developers.
-
-Flexibility: Supporting both relational and non-relational databases.
-
-Simplicity: An easy-to-use interface and setup process.
+   Affordability: Accessible to a wider range of users, especially small businesses and individual developers.
+    
+   Flexibility: Supporting both relational and non-relational databases.
+    
+   Simplicity: An easy-to-use interface and setup process.
