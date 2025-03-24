@@ -1,49 +1,49 @@
 # dental-data-pipeline
  
-Project Overview
+# Project Overview
 This project is focused on building a set of Python libraries to connect and manage various databases. These libraries will enable users to perform data copying, minimization, and sanitization. The goal is to provide a flexible and cost-effective solution for data transformation, offering essential features like security and ease of use.
 
 By the end of the project, the libraries will be hosted on GitHub, allowing public access and contribution. The libraries will also include relevant documentation to help users implement these features in their own systems.
 
-Key Features
-Data copying and synchronization between databases
+Key Features:
+   Data copying and synchronization between databases
+   
+   Data minimization and sanitization techniques for sensitive information
+   
+   Integration with relational and non-relational databases (e.g., MySQL, MongoDB)
+   
+   Customizable tools for data transformation, obfuscation, and masking
+  
+   Open-source and free for use
 
-Data minimization and sanitization techniques for sensitive information
-
-Integration with relational and non-relational databases (e.g., MySQL, MongoDB)
-
-Customizable tools for data transformation, obfuscation, and masking
-
-Open-source and free for use
-
-Competitor Analysis
+Competitor Analysis:
 We reviewed a few existing tools in the market to identify their strengths and weaknesses. Below is a comparison of popular tools:
 
 1. Tonic.AI
-Pros:
-
-Strong anonymization and AI-driven data masking
-
-Excellent for protecting sensitive information while maintaining usability for analytics
-
-Cons:
-
-Expensive, geared towards large enterprises
-
-Not open-source
+ Pros:
+ 
+ Strong anonymization and AI-driven data masking
+ 
+ Excellent for protecting sensitive information while maintaining usability for analytics
+ 
+ Cons:
+ 
+ Expensive, geared towards large enterprises
+ 
+ Not open-source
 
 2. Redgate SQL Clone
-Pros:
-
-Fast database cloning, enabling quick setup and rollback of database copies
-
-Great for development and testing environments
-
-Cons:
-
-Limited to SQL Server
-
-Pricing may be a concern for smaller teams or individual developers
+ Pros:
+ 
+ Fast database cloning, enabling quick setup and rollback of database copies
+ 
+ Great for development and testing environments
+ 
+ Cons:
+ 
+ Limited to SQL Server
+ 
+ Pricing may be a concern for smaller teams or individual developers
 
 3. Delphix
 Pros:
