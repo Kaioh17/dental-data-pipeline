@@ -1,0 +1,42 @@
+{
+  "destinations":
+  {
+    "count": 3,
+    "environments" :
+    [
+        {
+          "name" : "Sanitized_DB",
+          "Source" : "clean",
+          "batch_size" : 3000,
+          "filter_criteria": "last_3_months",
+          "retry_policy" :
+          {
+            "retries":3,
+            "retry_delay" : "5 minutes"
+          }
+      },
+      {
+        "name" : "Obfuscated_DB",
+        "source": "clean",
+        "batch_size" : 2000,
+        "filter_criteria": "last_3_months",
+         "retry_policy" :
+         {
+            "retries":3,
+            "retry_delay" : "10 minutes"
+          }
+      },
+      {
+        "name": "Dev_Test_DB",
+        "source": "mini",
+        "batch_size": 2000,
+        "filter_criteria": "last_3_months",
+        "retry_policy": {
+          "retries": 3,
+          "retry_delay": "3 minutes"
+        }
+      }
+    ]
+  }
+
+}
