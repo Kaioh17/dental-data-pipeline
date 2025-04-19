@@ -1,5 +1,40 @@
+
 {
+  "connections": {
+    "source_db": {
+    "host": "localhost",
+    "port": "5432",
+    "database": "bank_database",
+    "user": "postgres",
+    "password": "1308"
+  },
+    "destinations": {
+      "sanitized_DB": {
+        "host": "localhost",
+        "port": "5432",
+        "database": "sanitize_bank_db",
+        "user": "postgres",
+        "password": "1308"
+      },
+      "Obfuscated_DB": {
+        "host": "localhost",
+        "port": "5432",
+        "database": "obfuscated_bank_db",
+        "user": "postgres",
+        "password": "1308"
+      },
+      "Dev_test_DB": {
+        "host": "localhost",
+        "port": "5432",
+        "database": "dev_test_bank_db",
+        "user": "postgres",
+        "password": "1308"
+      }
+    }
+
+  },
   "destinations":
+
   {
     "count": 3,
     "environments" :
