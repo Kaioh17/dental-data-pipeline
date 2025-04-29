@@ -33,35 +33,25 @@
     }
 
   },
-  "destinations":
-
-  {
+  "destinations": {
     "count": 3,
     "environments" :
     [
         {
-          "name" : "Sanitized_DB",
+          "name" : "sanitize_bank_db",
           "Source" : "clean",
           "batch_size" : 3000,
           "filter_criteria": "last_3_months",
           "destination_table": "bank_data",
-          "retry_policy" :
-          {
-            "retries":3,
-            "retry_delay" : "5 minutes"
-          }
+          "retry_delay" : "5 minutes"
       },
       {
-        "name" : "Obfuscated_DB",
+        "name" : "obfuscated_bank_db",
         "source": "clean",
         "batch_size" : 2000,
         "filter_criteria": "last_3_months",
         "destination_table": "bank_data",
-         "retry_policy" :
-         {
-            "retries":3,
-            "retry_delay" : "10 minutes"
-          }
+        "retry_delay" : "10 minutes"
       },
       {
         "name": "Dev_Test_DB",
@@ -69,10 +59,8 @@
         "batch_size": 2000,
         "filter_criteria": "last_3_months",
         "destination_table": "bank_data",
-        "retry_policy": {
-          "retries": 3,
-          "retry_delay": "3 minutes"
-        }
+        "retry_delay": "3 minutes"
+        
       }
     ]
   }
