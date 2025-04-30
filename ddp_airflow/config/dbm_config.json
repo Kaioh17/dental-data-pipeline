@@ -4,65 +4,55 @@
     "source_db": {
     "host": "localhost",
     "port": "5432",
-    "database": "bank_database",
-    "user": "postgres",
-    "password": "1308"
+    "database": "bank_database"
   },
     "destinations": {
       "sanitized_DB": {
         "host": "localhost",
         "port": "5432",
-        "database": "sanitize_bank_db",
-        "user": "postgres",
-        "password": "1308"
+        "database": "sanitize_bank_db"
+
       },
       "Obfuscated_DB": {
         "host": "localhost",
         "port": "5432",
-        "database": "obfuscated_bank_db",
-        "user": "postgres",
-        "password": "1308"
+        "database": "obfuscated_bank_db"
+
       },
       "Dev_test_DB": {
         "host": "localhost",
         "port": "5432",
-        "database": "dev_test_bank_db",
-        "user": "postgres",
-        "password": "1308"
+        "database": "dev_test_bank_db"
+
       }
     }
 
   },
-  "destinations": {
-    "count": 3,
-    "environments" :
+  "environments" :
     [
         {
           "name" : "sanitize_bank_db",
           "Source" : "clean",
           "batch_size" : 3000,
-          "filter_criteria": "last_3_months",
           "destination_table": "bank_data",
-          "retry_delay" : "5 minutes"
+          "retry_delay" : "5"
       },
       {
         "name" : "obfuscated_bank_db",
         "source": "clean",
-        "batch_size" : 2000,
-        "filter_criteria": "last_3_months",
+        "batch_size" : 3000,
         "destination_table": "bank_data",
-        "retry_delay" : "10 minutes"
+        "retry_delay" : "10"
       },
       {
         "name": "Dev_Test_DB",
         "source": "mini",
-        "batch_size": 2000,
-        "filter_criteria": "last_3_months",
+        "batch_size": 1500,
+        "filter_criteria": "3 months",
         "destination_table": "bank_data",
-        "retry_delay": "3 minutes"
+        "retry_delay": "3"
         
       }
     ]
   }
 
-}

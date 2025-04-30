@@ -1,30 +1,38 @@
 import json
 import psycopg2
-
+import os
+from dotenv import load_dotenv
 #This loads the config file (converting it to a python dictionary for easy access)
 def load_config(path = "ddp_airflow/config/dbm_config.json" ):
     try:
         with open(path)as f:
             return json.load(f)
     except (FileNotFoundError, FileExistsError) as f:
-        return f"Error finding file: {f}"
-
+        raise ValueError(f"Error finding file: {f}")
 #connect to any db
+load_dotenv()
 def connect_db( db_info):
-    return psycopg2.connect(
-            host = db_info["host"],
-            port = db_info["port"],
-            database = db_info["database"],
-            user = db_info["user"],
-            password = db_info["password"]
-        )
+    try:
+        db_user = os.getenv("DB_USER")
+        db_password = os.getenv("DB_PASSWORD")
 
+        if not db_user or not db_password:
+            raise KeyError
+
+        return psycopg2.connect(
+                host = db_info["host"],
+                port = db_info["port"],
+                database = db_info["database"],
+                user = db_user,
+                password =db_password
+            )
+    except psycopg2.Error as  p:
+        raise ConnectionError(f"Error connecting to db: {p}")
 #method to connect to db
 def connect_to_prod_db():
     config = load_config()
     prod_info = config["connections"]["source_db"]
-    print(prod_info)
-    conn = connect_db( prod_info)
+    conn = connect_db(prod_info)
     return conn
 
 #create a temp_db connection
@@ -44,13 +52,13 @@ def close_db(conn,cur):
 #functions to copy data from the production DB to the destination DB
 def copy_data(source_cur, dest_conn, dest_cur, dest_table, **kwargs):
     source_type = kwargs.get("source", "clean")
-    batch_size = kwargs.get ("batch_size", 2000)
+    batch_size = kwargs.get ("batch_size", 3000)
     
 
     if  source_type == 'mini':
         source_cur.execute("SELECT * FROM bank_data LIMIT 5000")
     elif source_type == 'clean':
-        source_cur.execute("SELECT * FROM bank_data")
+        source_cur.execute("SELECT * FROM bank_data ")
 
     rows = source_cur.fetchmany(batch_size) # retrieves chunk ofrows at a time
     if not rows:
