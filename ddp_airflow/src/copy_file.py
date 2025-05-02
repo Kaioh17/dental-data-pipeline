@@ -40,6 +40,7 @@ def connect_to_temp_db(name):#name will be provided in the dag for each tasks
     config = load_config()
     test_info = config["connections"]["destinations"][name]
     conn = connect_db(test_info)
+    print("connected")
     return conn
 
 #a close db method
@@ -62,7 +63,7 @@ def copy_data(source_cur, dest_conn, dest_cur, dest_table, **kwargs):
 
     rows = source_cur.fetchmany(batch_size) # retrieves chunk ofrows at a time
     if not rows:
-        return "No data to copy."
+        return "No data to copy."  ####logging info for better feedbacks
 
     placeholders =','.join(['%s']* len(rows[0]))
     insert_query =f"INSERT INTO {dest_table} VALUES ({placeholders})"
@@ -84,12 +85,19 @@ def copy_data(source_cur, dest_conn, dest_cur, dest_table, **kwargs):
     return f"Copied {len(rows)} rows to {dest_table}" #succes message
 
 # Function to handle the process of copying data from production DB to dest DB
-def perform_copy_data ( dest_table,dest_db_name, source, **kwargs):
-    source_conn = connect_to_prod_db(source) #connect to source db
-    source_cur = source_conn.cursor() #create cursor for production db
+def perform_copy_data ( dest_table,dest_db_name, **kwargs):
+   
+    source = kwargs.get("source", "clean")
+    source_name = kwargs.get("source_db")
+    if source == 'mini': #To permit switch between data sources
+        source_conn = connect_to_temp_db(source_name) #connect to source db
+        source_cur = source_conn.cursor() #create source cursor
+    else: 
+        source_conn = connect_to_prod_db() #connect to source db
+        source_cur = source_conn.cursor() #create source cursor
 
     dest_conn = connect_to_temp_db(dest_db_name)  # connect to destination db
-    dest_cur = dest_conn.cursor() #create cursor for destination db
+    dest_cur = dest_conn.cursor() #create destination cursor
 
     try:
         copy_data(source_cur,dest_conn,dest_cur,dest_table,**kwargs)
@@ -97,6 +105,7 @@ def perform_copy_data ( dest_table,dest_db_name, source, **kwargs):
         return f"Error: {e}"
     finally:
         # ensure all dbs connections are properly closed
+        
         close_db(dest_conn,dest_cur)
         close_db(source_conn,source_cur)
 
