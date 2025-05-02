@@ -7,18 +7,13 @@
     "database": "bank_database"
   },
     "destinations": {
-      "sanitized_DB": {
+      "clean_bank_db": {
         "host": "localhost",
         "port": "5432",
-        "database": "sanitize_bank_db"
+        "database": "clean_bank_db"
 
       },
-      "Obfuscated_DB": {
-        "host": "localhost",
-        "port": "5432",
-        "database": "obfuscated_bank_db"
-
-      },
+     
       "Dev_test_DB": {
         "host": "localhost",
         "port": "5432",
@@ -26,23 +21,15 @@
 
       }
     }
-
   },
   "environments" :
     [
         {
-          "name" : "sanitize_bank_db",
+          "name" : "clean_bank_db",
           "Source" : "clean",
           "batch_size" : 3000,
           "destination_table": "bank_data",
           "retry_delay" : "5"
-      },
-      {
-        "name" : "obfuscated_bank_db",
-        "source": "clean",
-        "batch_size" : 3000,
-        "destination_table": "bank_data",
-        "retry_delay" : "10"
       },
       {
         "name": "Dev_Test_DB",
