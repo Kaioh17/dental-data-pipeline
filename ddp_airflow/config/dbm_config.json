@@ -13,6 +13,12 @@
         "database": "clean_bank_db"
 
       },
+
+      "mini_bank_db": {
+        "host": "localhost",
+        "port" : "5432",
+        "database" : "mini_bank_db"
+      },
      
       "Dev_test_DB": {
         "host": "localhost",
@@ -30,6 +36,15 @@
           "batch_size" : 3000,
           "destination_table": "bank_data",
           "retry_delay" : "5"
+      },
+      {
+        "name": "mini_bank_db",
+        "source": "mini",
+        "batch_size": 1500,
+        "filter_criteria": "3 months",
+        "destination_table": "bank_data",
+        "retry_delay": "3"
+        
       },
       {
         "name": "Dev_Test_DB",
