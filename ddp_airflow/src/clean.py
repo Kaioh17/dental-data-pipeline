@@ -40,15 +40,13 @@ def aggregate_age(data):
     return data
 def field_removal():
     keys_to_remove = ['default', 'pdays','previous','poutcome'] 
-    # for key in keys_to_remove:
-    #     if key in data:
-    #         del data[key]
     return keys_to_remove
 
 def _execute_removal_query(conn, cur, columns):
     clause = ",".join([f'DROP COLUMN IF EXISTS "{col}"' for col in columns])
     cur.execute(f"ALTER TABLE bank_data  {clause};")
     print(f"ALTER TABLE bank_data {clause};")
+    #conn.commit()
 
 #helper function execute query and reduce redundancy
 def _execute_query(conn, cur, columns):
@@ -91,7 +89,6 @@ def sanitize_and_obfuscate():
     _execute_query(conn,cur, agg_data)
 
     #field remval
-    # column_to_remove = {'default': 'no', 'pdays': 5, 'previous': 10, 'poutcome': 'failure'}
     remove_data = field_removal()
     print(remove_data)
     #query
