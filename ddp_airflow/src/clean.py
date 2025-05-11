@@ -19,7 +19,7 @@ def redact_data(data):
     return data
 
 def mask_data(data):
-    data['balance'] = '####'
+    data['balance'] = -1
     return data
 
 def tokenize_data(data):
@@ -27,18 +27,28 @@ def tokenize_data(data):
 
 def aggregate_age(data):
     age = data.get('age')
-    if age < 20:
-        data['age'] = 'under 20'
-    elif 20 <= age < 30:
-        data['age'] = '20-29'
+
+    if age is not None: 
+        if age < 20:
+            data['age'] = 'under 20'
+        elif 20 <= age < 30:
+            data['age'] = '20-29'
+        else:
+            data['age'] = '30+'
     else:
-        data['age'] = '30+'
+        data['age'] = -1
     return data
-def field_removal(data):
-    del data['default']
-    return data
+def field_removal():
+    keys_to_remove = ['default', 'pdays','previous','poutcome'] 
+    # for key in keys_to_remove:
+    #     if key in data:
+    #         del data[key]
+    return keys_to_remove
+
 def _execute_removal_query(conn, cur, columns):
-    pass
+    clause = ",".join([f'DROP COLUMN IF EXISTS "{col}"' for col in columns])
+    cur.execute(f"ALTER TABLE bank_data  {clause};")
+    print(f"ALTER TABLE bank_data {clause};")
 
 #helper function execute query and reduce redundancy
 def _execute_query(conn, cur, columns):
@@ -74,15 +84,16 @@ def sanitize_and_obfuscate():
     #query
     _execute_query(conn,cur, masked_data)
 
-     #Aggregate data
+    #Aggregate data
     column_agg = {}
     agg_data = aggregate_age(column_agg)
     #query
     _execute_query(conn,cur, agg_data)
 
     #field remval
-    column_to_remove = {}
-    remove_data = field_removal(column_to_remove)
+    # column_to_remove = {'default': 'no', 'pdays': 5, 'previous': 10, 'poutcome': 'failure'}
+    remove_data = field_removal()
+    print(remove_data)
     #query
     _execute_removal_query(conn, cur, remove_data)    
     
