@@ -31,7 +31,7 @@ default_args = {
 
 
 with DAG(
-    dag_id = 'bank_elt',
+    dag_id = 'bank_elt_DAG',
     default_args = default_args,
     description = "Performs daily ELT: copies bank data from prod to clean DB, sanitizes it, and loads it into a dev database.",
     start_date = datetime(2025, 4, 29, 2),
@@ -64,24 +64,25 @@ with DAG(
     
 
     #copy to mini db
-    copy_to_dev = PythonOperator(
-        task_id = 'copy_to_dev',
-        description = "Loads clean and minimized data to db",
-        python_callable = perform_copy_data,
+    copy_to_mini = PythonOperator(
+        task_id = 'Copy clean data to mini db',
+        description = "This task copies already transformed data to the mini database",
+        pyrhon_callable = perform_copy_data,
         op_kwargs=
         {
             "dest_table": dest[1]["destination_table"],
-            "source_db" : dest[0]["name"], #calls the copy_file(i.e transformed)
-            "dest_db_name": dest[1]["name"],
-            "source" : dest[1]["source"],
+            "source_db" : dest[0]["name"], 
+            "dest_db_name" : dest[1]["name"],
             "batch_size" : dest[1]["batch_size"],
-            "filter_criteria" : dest[1]["filter_criteria"]
-        },
-        retry_delay = timedelta(minutes = dest[1]["retry_delay"]) 
-    )
+            "source" : dest[1]["source"],
+            "filter_criteria" : dest[2]["filter_criteria"]
 
+        },
+        retry_delay = timedelta(minutes = dest[1]["retry_delay"])
+    )
+   
 
 
     #set task dependencies (ELT)
 
-    copy_to_clean >> transform_data >> copy_to_dev
+    copy_to_clean >> transform_data >> copy_to_mini
