@@ -41,9 +41,14 @@ with DAG(
         execution_delta= timedelta(minutes = 0),
         timeout = 600,
         mode = 'poke',
-        pokke_interval = 30
+        poke_interval = 30
     )
+    filter_data =PythonOperator(
+        task_id = 'filter_data',
+        description = "Loads only data needed",
+        python_callable= minimize_data.filter_data,
 
+    )
 
     #a task to copy's the minimized data into the lower env
     copy_to_dev = PythonOperator(
