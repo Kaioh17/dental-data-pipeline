@@ -1,9 +1,12 @@
 from airflow import DAG
-from airflow.providers.standard.operators.python import PythonOperator
+from airflow.operators.python import PythonOperator 
 
-from src.copy_file import perform_copy_data
-from src.clean import sanitize_and_obfuscate
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
+from ddp_airflow.src.copy_file import perform_copy_data
+from ddp_airflow.src.clean import sanitize_and_obfuscate
 
 
 from datetime import datetime, timedelta
@@ -35,13 +38,12 @@ with DAG(
     default_args = default_args,
     description = "Performs daily ELT: copies bank data from prod to clean DB, sanitizes it, and loads it into a dev database.",
     start_date = datetime(2025, 4, 29, 2),
-    schedule_interval = '@daily'
+    schedule = '@daily'
 
 ) as dag:
     #extract from production to cleandb
     copy_to_clean = PythonOperator(
         task_id = 'copy_to_clean',
-        description = "Loads raw data from production to clean database",
         python_callable = perform_copy_data,
         op_kwargs=
         {
@@ -51,23 +53,28 @@ with DAG(
             "batch_size" : dest[0]["batch_size"]
              
         },
-        retry_delay = timedelta(minutes = dest[0]["retry_delay"]) 
+        retry_delay = timedelta(minutes = int(dest[0]["retry_delay"])), 
+        doc_md = """### Task: copy_to_clean  
+                    Loads raw data from production to the clean database.
+                    """
     )
     
     # sanitize and obfuscate data
     transform_data = PythonOperator(
         task_id = 'sanitize_and_obfuscate',
-        description = "Sanitizes and obfuscates sensitive fields in the clean bank data (e.g., name, age, contact).",
         python_callable= sanitize_and_obfuscate,
-        retry_delay = timedelta(minutes = dest[0]["retry_delay"])
+        retry_delay = timedelta(minutes = int(dest[0]["retry_delay"])),
+        doc_md = """### Task: sanitize_and_obfuscate  
+                    Sanitizes and obfuscates sensitive fields in the clean bank data (e.g., name, age, contact).
+                    """
+         
     )
     
 
     #copy to mini db
     copy_to_mini = PythonOperator(
-        task_id = 'Copy clean data to mini db',
-        description = "This task copies already transformed data to the mini database",
-        pyrhon_callable = perform_copy_data,
+        task_id = 'Copy-clean-data-to-mini-db',
+        python_callable = perform_copy_data,
         op_kwargs=
         {
             "dest_table": dest[1]["destination_table"],
@@ -78,7 +85,10 @@ with DAG(
             "filter_criteria" : dest[2]["filter_criteria"]
 
         },
-        retry_delay = timedelta(minutes = dest[1]["retry_delay"])
+        retry_delay = timedelta(minutes = int(dest[1]["retry_delay"])), 
+        doc_md = """### Task: Copy-clean-data-to-mini-db
+                    This task copies already transformed data to the mini database
+                    """
     )
    
 

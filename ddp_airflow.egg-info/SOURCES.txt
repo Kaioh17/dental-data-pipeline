@@ -1,0 +1,17 @@
+README.md
+setup.py
+ddp_airflow/__init__.py
+ddp_airflow.egg-info/PKG-INFO
+ddp_airflow.egg-info/SOURCES.txt
+ddp_airflow.egg-info/dependency_links.txt
+ddp_airflow.egg-info/top_level.txt
+ddp_airflow/config/__init__.py
+ddp_airflow/dags/__init__.py
+ddp_airflow/dags/copy_db_dag.py
+ddp_airflow/dags/minimization_dag.py
+ddp_airflow/src/__init__.py
+ddp_airflow/src/clean.py
+ddp_airflow/src/copy_file.py
+ddp_airflow/src/create_tables.py
+ddp_airflow/src/minimze_data.py
+ddp_airflow/src/test_dag.py

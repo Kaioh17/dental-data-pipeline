@@ -31,7 +31,7 @@
     [
         {
           "name" : "clean_bank_db",
-          "Source" : "clean",
+          "source" : "clean",
           "batch_size" : 3000,
           "destination_table": "bank_data",
           "retry_delay" : "5"

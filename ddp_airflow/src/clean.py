@@ -1,5 +1,5 @@
 import psycopg2
-import copy_file
+from . import copy_file
 
 
 

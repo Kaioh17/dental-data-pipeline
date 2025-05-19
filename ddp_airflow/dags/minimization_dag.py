@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.providers.standard.operators.python import PythonOperator
+from airflow.operators.python import PythonOperator 
 from airflow.providers.standard.sensors.external_task import ExternalTaskSensor
 
 from src.copy_file import perform_copy_data
