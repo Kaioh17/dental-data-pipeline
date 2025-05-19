@@ -19,7 +19,21 @@
         "port" : "5432",
         "database" : "mini_bank_db"
       },
-     
+       "sandbox1": {
+        "host": "localhost",
+        "port" : "5432",
+        "database" : "sandbox1"
+      },
+       "sandbox2": {
+        "host": "localhost",
+        "port" : "5432",
+        "database" : "sandbox2"
+      },
+       "sandbox3": {
+        "host": "localhost",
+        "port" : "5432",
+        "database" : "sandbox3"
+      },
       "Dev_test_DB": {
         "host": "localhost",
         "port": "5432",
@@ -29,7 +43,7 @@
   },
   "environments" :
     [
-        {
+      {
           "name" : "clean_bank_db",
           "source" : "clean",
           "batch_size" : 3000,

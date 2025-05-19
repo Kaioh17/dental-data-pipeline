@@ -52,14 +52,17 @@ def close_db(conn,cur):
 
 #functions to copy data from the production DB to the destination DB
 def copy_data(source_cur, dest_conn, dest_cur, dest_table, **kwargs):
+
+    config = load_config()
+    table = config["environments"][0]["destination_table"]
     source_type = kwargs.get("source", "clean")
     batch_size = kwargs.get ("batch_size", 3000)
     
 
     if  source_type == 'mini':
-        source_cur.execute("SELECT * FROM bank_data LIMIT 5000")
+        source_cur.execute(f"SELECT * FROM {table} LIMIT 5000")
     elif source_type == 'clean':
-        source_cur.execute("SELECT * FROM bank_data ")
+        source_cur.execute(f"SELECT * FROM {table}")
 
     rows = source_cur.fetchmany(batch_size) # retrieves chunk ofrows at a time
     if not rows:

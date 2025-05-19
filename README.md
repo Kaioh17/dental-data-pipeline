@@ -10,7 +10,7 @@ By the end of the project, the libraries will be hosted on GitHub, allowing publ
    
    Data minimization and sanitization techniques for sensitive information
    
-   Integration with relational and non-relational databases (e.g., MySQL, MongoDB)
+   Designed system to optionally interact with non-relational data (e.g., JSON fields) within PostgreSQL. 
    
    Customizable tools for data transformation, obfuscation, and masking
   
