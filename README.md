@@ -58,8 +58,8 @@ Setup and configuration are complex
 
 Enterprise-level pricing
 
-# Our Solution
-Our custom tool aims to provide a flexible, open-source solution for secure data management that can be easily integrated into different database systems. We focus on:
+# Solution
+This custom tool aims to provide a flexible, open-source solution for secure data management that can be easily integrated into different database systems. We focus on:
 
    Affordability: Accessible to a wider range of users, especially small businesses and individual developers.
     
